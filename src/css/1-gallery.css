@@ -1,0 +1,52 @@
+/* --------------------------------------------- */
+/*--------- reset basic styles (NEW) ----------- */
+/* * {
+box-sizing: border-box;
+} */
+
+/* ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 1440px;
+  margin: 0 auto;
+} */
+
+/* --------------------------------------------- */
+/* ----------- STYLES task-4 (New) ------------- */
+/* -----------------------------------------------
+Додай стилізацію галереї згідно макету + ХОВЕР. 
+--------------------------------------------- */
+/* .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 24px;
+  column-gap: 24px;
+  padding: 156px 24px;
+} */
+
+/* 
+.gallery-link {
+  flex-basis: calc((100% - 48px) / 3);
+} */
+
+/* .gallery-image {
+  display: block;
+  width: 360px;
+  height: 200px;
+  object-fit: cover; 
+  object-position: center; 
+  border-radius: 4px;
+  transition: transform 0.3s ease; 
+} */
+
+/* .gallery-image:hover,
+.gallery-image:focus {
+  transform: scale(1.05);
+  cursor: zoom-in;
+} */

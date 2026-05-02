@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-10</title>
+    <title>goit-js-hw-11</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
@@ -16,28 +16,48 @@
               <use href="./img/sprite.svg#logo"></use>
             </svg>
           </a>
-          <ul class="nav-list">
-            <li class="nav-item">
-              <a class="nav-link {=$highlight-act}" href="./1-timer.html"
-                >Timer</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {=$highlight-curr}" href="./2-snackbar.html"
-                >Snackbar (promise generator)</a
-              >
-            </li>
-          </ul>
         </nav>
       </div>
     </header>
 
-    <main></main>
+    <main>
+      <h1 class="main-title nav-item">Gallery</h1>
+
+      <ul class="gallery"></ul>
+      <div class="wrapper">
+        <!-- Форма пошуку -->
+        <form id="search-form" class="search-form">
+          <div class="form-group">
+            <label for="photo-input">Оберіть зображення</label>
+            <input
+              list="photo-list"
+              id="photo-input"
+              class="input-field"
+              placeholder="Наприклад: ..."
+              autocomplete="off"
+            />
+            <datalist id="photo-list"></datalist>
+          </div>
+
+          <button type="submit" class="btn">Знайти зображення</button>
+        </form>
+
+        <!-- Лоадер -->
+        <div id="loader" class="loader hidden">
+          <p>Завантаження...</p>
+        </div>
+      </div>
+
+      <!-- Контейнер для картки -->
+      <div id="photo-card" class="card-container"></div>
+    </main>
 
     <footer class="footer">
       <div class="container">
         <p class="footer-desc">Made with ✨ by Anna K.</p>
       </div>
     </footer>
+
+    <script src="main.js" type="module"></script>
   </body>
 </html>
