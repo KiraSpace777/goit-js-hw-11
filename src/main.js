@@ -48,11 +48,10 @@ form.addEventListener('submit', event => {
           iconColor: '#FFFFFF',
           theme: 'dark',
         });
-        // Повертаємо пустий проміс, щоб finally не спрацював раніше "логічно"
-        return Promise.resolve();
+        return;
       }
-      // Чекаємо, поки createGallery завантажить усі картинки
-      return createGallery(data.hits);
+      // викликаємо функцію рендеру createGallery (завантажить картинки)
+      createGallery(data.hits);
     })
     .catch(error => {
       iziToast.error({
@@ -62,7 +61,6 @@ form.addEventListener('submit', event => {
       console.error(error);
     })
     .finally(() => {
-      // Лоадер ховається тільки після того, як картинки вже завантажені
       hideLoader();
       form.reset();
     });

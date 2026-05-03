@@ -11,21 +11,10 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 export function createGallery(images) {
-  // 1. Створюємо проміси для завантаження кожної картинки
-  const promises = images.map(image => {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.src = image.webformatURL;
-      img.onload = () => resolve();
-      img.onerror = () => resolve(); // продовжуємо, навіть якщо одна впала
-    });
-  });
-
-  // 2. Повертаємо результат тільки після завантаження всіх фото
-  return Promise.all(promises).then(() => {
-    const markup = images
-      .map(
-        image => `
+  // функція синхронна і просто генерує розмітку
+  const markup = images
+    .map(
+      image => `
       <li class="gallery-card">
         <a class="gallery-link" href="${image.largeImageURL}">
           <img class="gallery-image" src="${image.webformatURL}" alt="${image.tags}" />
@@ -36,14 +25,15 @@ export function createGallery(images) {
           <div class="info-block"><span class="info-label">Comments</span><span class="info-value">${image.comments}</span></div>
           <div class="info-block"><span class="info-label">Downloads</span><span class="info-value">${image.downloads}</span></div>
         </div>
-      </li>
-      `
-      )
-      .join('');
+      </li>`
+    )
+    .join('');
 
-    galleryContainer.insertAdjacentHTML('beforeend', markup);
-    lightbox.refresh();
-  });
+  // Вставляємо в DOM і оновлюємо лайтбокс
+  galleryContainer.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
+
+  // Жодних return! Функція просто виконала роботу.
 }
 
 export function clearGallery() {
