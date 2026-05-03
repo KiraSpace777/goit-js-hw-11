@@ -11,6 +11,9 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 export function createGallery(images) {
+  // ПЕРЕВІРКА: якщо контейнера немає, просто виходимо з функції
+  if (!galleryContainer) return;
+
   // функція синхронна і просто генерує розмітку
   const markup = images
     .map(
