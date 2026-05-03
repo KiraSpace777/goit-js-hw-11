@@ -1,4 +1,62 @@
-console.log('Gallery');
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const galleryContainer = document.querySelector('.gallery');
+const loaderOverlay = document.querySelector('.loader-overlay');
+
+// Ініціалізація SimpleLightbox
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
+export function createGallery(images) {
+  // 1. Створюємо проміси для завантаження кожної картинки
+  const promises = images.map(image => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = image.webformatURL;
+      img.onload = () => resolve();
+      img.onerror = () => resolve(); // продовжуємо, навіть якщо одна впала
+    });
+  });
+
+  // 2. Повертаємо результат тільки після завантаження всіх фото
+  return Promise.all(promises).then(() => {
+    const markup = images
+      .map(
+        image => `
+      <li class="gallery-card">
+        <a class="gallery-link" href="${image.largeImageURL}">
+          <img class="gallery-image" src="${image.webformatURL}" alt="${image.tags}" />
+        </a>
+        <div class="card-info">
+          <div class="info-block"><span class="info-label">Likes</span><span class="info-value">${image.likes}</span></div>
+          <div class="info-block"><span class="info-label">Views</span><span class="info-value">${image.views}</span></div>
+          <div class="info-block"><span class="info-label">Comments</span><span class="info-value">${image.comments}</span></div>
+          <div class="info-block"><span class="info-label">Downloads</span><span class="info-value">${image.downloads}</span></div>
+        </div>
+      </li>
+      `
+      )
+      .join('');
+
+    galleryContainer.insertAdjacentHTML('beforeend', markup);
+    lightbox.refresh();
+  });
+}
+
+export function clearGallery() {
+  galleryContainer.innerHTML = '';
+}
+
+export function showLoader() {
+  if (loaderOverlay) loaderOverlay.classList.add('is-active');
+}
+
+export function hideLoader() {
+  if (loaderOverlay) loaderOverlay.classList.remove('is-active');
+}
 
 // ========================================================
 // Для організації коду використовуй модульність та синтаксис export/import.

@@ -1,14 +1,108 @@
-/**
-  |============================
-  | include js partials with
-  | default @import url()
-  |============================
-*/
+// ============ 1. Імпорт стилів  CSS ===============//
+import './css/styles.css';
 
+// ============ 2. Імпорт функцій ===================//
+import { getImagesByQuery } from './js/pixabay-api.js';
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+} from './js/render-functions.js';
+
+// ============ 3. Імпорт бібліотек ================//
+// Описаний у документації
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
+
+const searchForm = document.querySelector('.search-form');
+
+searchForm.addEventListener('submit', event => {
+  event.preventDefault();
+  // Отримуємо значення інпуту через name="query"
+  const query = event.currentTarget.elements.query.value.trim();
+
+  if (query === '') {
+    iziToast.warning({
+      message: 'Please enter search query',
+      position: 'topRight',
+    });
+    return;
+  }
+
+  // 1. Очищення старої галереї
+  clearGallery();
+  // 2. Показ CSS-лоадера
+  showLoader();
+
+  getImagesByQuery(query)
+    .then(data => {
+      if (data.hits.length === 0) {
+        // Якщо нічого не знайдено, приховуємо лоадер і показуємо помилку
+        hideLoader();
+        iziToast.error({
+          message:
+            'Sorry, there are no images matching your search query. <br> Please try again!',
+          position: 'topRight',
+          backgroundColor: 'rgba(239, 64, 64, 0.8)',
+          messageColor: '#FFF',
+          iconColor: '#FFFFFF',
+          theme: 'dark',
+        });
+        return;
+      }
+      // Чекаємо, поки createGallery завантажить усі картинки
+      return createGallery(data.hits);
+    })
+    .catch(error => {
+      hideLoader(); // Ховаємо, якщо сталася помилка мережі
+      iziToast.error({
+        message: 'Something went wrong!',
+        position: 'topRight',
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      // Лоадер ховається тільки після того, як картинки вже завантажені
+      hideLoader();
+      searchForm.reset();
+    });
+});
+
+/**
+  |=======================================
+  | ЗАДАНИЕ
+  |=======================================
+*/
 // ---------------------------------
 // У файлі main.js напиши всю логіку роботи додатка. Виклики нотифікацій iziToast, усі перевірки на довжину масиву в отриманій відповіді робимо саме в цьому файлі. Імпортуй в нього функції із файлів pixabay-api.js та render-functions.js та викликай їх у відповідний момент.
-// ---------------------------------
-// IMPORT/EXPORT VIA ECMAScript Modules (ESM)
+// ------------
+// Список параметрів рядка запиту, які тобі обов'язково необхідно вказати:
+// ------------
+// key — твій унікальний ключ доступу до API.
+// q — слово для пошуку. Те, що буде вводити користувач.
+// image_type — тип зображення. Потрібні тільки фотографії, тому постав значення photo.
+// orientation — орієнтація фотографії. Постав значення horizontal.
+// safesearch — фільтр за віком.Постав значення true.
+
+/**
+  |=======================================
+  | БИБЛИОТЕКИ
+  |=======================================
+*/
+// -------------------------------------------------------------
+// --- axios ---
+// https://axios.rest/pages/getting-started/first-steps.html
+// -------------------------------------------------------------
+// Using npm
+// npm install axios
+
+/**
+  |=======================================
+  | IMPORT/EXPORT VIA ECMAScript Modules (ESM)
+  |=======================================
+*/
 // ---------------------------------
 // ECMAScript Modules (ESM) — сучасний стандарт системи модулів JavaScript, який відповідає за організацію та уніфікований підхід до імпорту та експорту даних між різними файлами в проєкті.
 // ---------------------------------/defolt/ ---------------------------------

@@ -8,48 +8,29 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <header class="header">
-      <div class="container">
-        <nav class="nav">
-          <a class="nav-logo" href="./index.html" aria-label="Site logo">
-            <svg class="nav-logo-icon" width="100" height="30">
-              <use href="./img/sprite.svg#logo"></use>
-            </svg>
-          </a>
-        </nav>
-      </div>
-    </header>
-
+    <header></header>
     <main>
-      <h1 class="main-title nav-item">Gallery</h1>
+      <form class="search-form">
+        <label class="form-label">
+          <p class="label-text">Choose the photo</p>
+          <input
+            class="input-field"
+            type="text"
+            name="query"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+        </label>
+        <button class="submit-btn" type="submit">Search</button>
+      </form>
 
-      <ul class="gallery"></ul>
-      <div class="wrapper">
-        <!-- Форма пошуку -->
-        <form id="search-form" class="search-form">
-          <div class="form-group">
-            <label for="photo-input">Оберіть зображення</label>
-            <input
-              list="photo-list"
-              id="photo-input"
-              class="input-field"
-              placeholder="Наприклад: ..."
-              autocomplete="off"
-            />
-            <datalist id="photo-list"></datalist>
-          </div>
-
-          <button type="submit" class="btn">Знайти зображення</button>
-        </form>
-
-        <!-- Лоадер -->
-        <div id="loader" class="loader hidden">
-          <p>Завантаження...</p>
-        </div>
+      <!-- Елемент для css-loader (стилі в CSS, без зовнішньої бібліотеки) -->
+      <div class="loader-overlay">
+        <span class="loader"></span>
       </div>
 
-      <!-- Контейнер для картки -->
-      <div id="photo-card" class="card-container"></div>
+      <!-- Елемент для модалки simplelightbox -->
+      <ul class="gallery"></ul>
     </main>
 
     <footer class="footer">
