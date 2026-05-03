@@ -16,9 +16,9 @@ import iziToast from 'izitoast';
 // Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
 
-const searchForm = document.querySelector('.search-form');
+const form = document.querySelector('.form');
 
-searchForm.addEventListener('submit', event => {
+form.addEventListener('submit', event => {
   event.preventDefault();
   // Отримуємо значення інпуту через name="query"
   const query = event.currentTarget.elements.query.value.trim();
@@ -66,7 +66,7 @@ searchForm.addEventListener('submit', event => {
     .finally(() => {
       // Лоадер ховається тільки після того, як картинки вже завантажені
       hideLoader();
-      searchForm.reset();
+      form.reset();
     });
 });
 
