@@ -48,7 +48,8 @@ form.addEventListener('submit', event => {
           iconColor: '#FFFFFF',
           theme: 'dark',
         });
-        return;
+        // Повертаємо пустий проміс, щоб finally не спрацював раніше "логічно"
+        return Promise.resolve();
       }
       // Чекаємо, поки createGallery завантажить усі картинки
       return createGallery(data.hits);
